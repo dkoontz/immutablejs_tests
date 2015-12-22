@@ -6,10 +6,30 @@ var Immutable = require ('immutable');
 // amendPreviousCommit : bool
 // stagedFiles : List<string>
 
-var storeData = Immutable.fromJS({
-  pendingCommit: {summary:"", message:"", amendPreviousCommit:false, stagedFiles:[]},
-  unstagedFiles: []
+// var storeData = Immutable.fromJS({
+//   pendingCommit: {summary:"", message:"", amendPreviousCommit:false, stagedFiles:[]},
+//   unstagedFiles: []
+// });
+
+const PendingCommit = Immutable.Record({
+    summary: "",
+    message: "",
+    amendPreviousCommit: false,
+    stagedFiles: Immutable.fromJS([])
 });
+
+const Store = Immutable.Record({
+    pendingCommit: PendingCommit(),
+    unstagedFiles: Immutable.fromJS([])
+})
+
+var storeData = Store();
+
+// === previous version using a Map
+// var storeData = Immutable.Map({
+//   pendingCommit: {summary:"", message:"", amendPreviousCommit:false, stagedFiles:[]},
+//   unstagedFiles: []
+// });
 
 const CommitMessageStore =
 {
@@ -25,25 +45,40 @@ const CommitMessageStore =
 
   summaryChanged: function(text)
   {
-    storeData = storeData.setIn(['pendingCommit', 'summary'], Immutable.fromJS(text));
+    storeData =
+      storeData.set(
+        'pendingCommit',
+        storeData.pendingCommit.set('summary', text));
   },
 
   messageChanged: function(text)
   {
-    storeData = storeData.setIn(['pendingCommit', 'message'], Immutable.fromJS(text));
+    storeData =
+      storeData.set(
+        'pendingCommit',
+        storeData.pendingCommit.set('message', text));
   },
 
-  setAmendCommit: function(ammendStatus)
+  setAmendCommit: function(status)
   {
-    storeData = storeData.setIn(['pendingCommit', 'amendPreviousCommit'], Immutable.fromJS(ammendStatus));
+    storeData =
+      storeData.set(
+        'pendingCommit',
+        storeData.pendingCommit.set('amendPreviousCommit', status));
   },
 
   fileStaged: function(file)
   {
-    var staged = storeData.getIn(['pendingCommit', 'stagedFiles']).push(file);
-    var unstaged = storeData.get('unstagedFiles').filterNot(function(e) { return e === file });
-    var temp = storeData.setIn(['pendingCommit', 'stagedFiles'], staged);
-    storeData = temp.set('unstagedFiles', unstaged);
+    var staged = storeData.pendingCommit.get('stagedFiles').push(file);
+    var updatedPending = storeData.pendingCommit.set('stagedFiles', staged);
+    var updatedUnstaged =
+      storeData.unstagedFiles.filterNot(function(e) { return e === file });
+
+    storeData =
+      storeData.merge({
+        'pendingCommit': updatedPending,
+        'unstagedFiles': updatedUnstaged
+      });
   }
 };
 

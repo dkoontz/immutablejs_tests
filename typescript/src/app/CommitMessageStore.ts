@@ -54,9 +54,10 @@ export module CommitMessageStore
   export function fileStaged(file : string) : void
   {
     let stagedFiles = storeData.pendingCommit.stagedFiles.push(file);
+    let updatedPending = storeData.pendingCommit.set('stagedFiles', stagedFiles);
     let unstagedFiles = storeData.unstagedFiles.filter(f => f != file);
 
-    storeData = storeData.set('pendingCommit', storeData.pendingCommit.set('stagedFiles', stagedFiles));
+    storeData = storeData.set('pendingCommit', updatedPending);
     storeData = storeData.set('unstagedFiles', unstagedFiles);
   }
 }

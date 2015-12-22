@@ -7,9 +7,9 @@ CommitMessageStore.loadUnstagedFiles(["foo.txt", "bar.js", "baz.css", "quux.html
 var commitMessageStore = CommitMessageStore.get();
 
 CommitMessageStore.summaryChanged("New summary");
-// CommitMessageStore.messageChanged("New message");
-// CommitMessageStore.setAmendCommit(true);
-// CommitMessageStore.fileStaged("bar.js");
+CommitMessageStore.messageChanged("New message");
+CommitMessageStore.setAmendCommit(true);
+CommitMessageStore.fileStaged("bar.js");
 var commitMessageStore2 = CommitMessageStore.get();
 
 compareStores(commitMessageStore, commitMessageStore2);
