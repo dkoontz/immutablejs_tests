@@ -7,3 +7,4 @@ elm-stuff
 built/
 .DS_Store
 output.js
+.psci*
