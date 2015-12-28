@@ -3,7 +3,6 @@
 // exports.mod = require ('immutable').List;
 const List = require('immutable').List;
 
-exports.plusNine = function (num) { return 9 + num; };
-// exports.makeList = function() { return exports.mod([1,2,3]); };
-exports.makeList = function() { return List([1,2,3]); };
+exports.makeList = function(list) { return List(list); };
 exports.length = function(list) { return list.count(); };
+exports._push = function(list, value) { return list.push(value); };
