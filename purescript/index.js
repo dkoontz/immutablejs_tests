@@ -38,48 +38,34 @@ var Immutable = require('Immutable');
 
 // console.log(Main.nums);
 
-var store = Main.createStore;
-var store2 = Main.loadUnstagedFiles(["foo.txt", "bar.js", "baz.css", "quux.html"])(store);
+var store1 = Main.createStore;
+var store2 = Main.loadUnstagedFiles(["foo.txt", "bar.js", "baz.css", "quux.html"])(store1);
 var store3 = Main.summaryChanged("new summary")(store2);
 var store4 = Main.messageChanged("new message")(store3);
 var store5 = Main.setAmendCommit(true)(store4);
 var store6 = Main.fileStaged("bar.js")(store5);
 
-console.log("-------------");
-console.log(store);
-console.log("-------------");
-console.log(store2);
-console.log("-------------");
-console.log(store3);
-console.log("-------------");
-console.log(store4);
-console.log("-------------");
-console.log(store5);
-console.log("-------------");
-console.log(store6);
+// console.log("-------------");
+// console.log(store1);
+// console.log("-------------");
+// console.log(store2);
+// console.log("-------------");
+// console.log(store3);
+// console.log("-------------");
+// console.log(store4);
+// console.log("-------------");
+// console.log(store5);
+// console.log("-------------");
+// console.log(store6);
 
+compareStores(store2, store4);
 
-// var commitMessageStore = Main.get();
-//
-// Main.summaryChanged("New summary");
-// Main.messageChanged("New message");
-// Main.setAmendCommit(true);
-// Main.fileStaged("bar.js");
-// var commitMessageStore2 = Main.get();
-//
-// compareStores(commitMessageStore, commitMessageStore2);
-//
-// console.log("commitMessageStore ========")
-// console.log(commitMessageStore);
-// console.log("commitMessageStore2 =======")
-// console.log(commitMessageStore2);
-//
-// function compareStores(store1, store2)
-// {
-//   console.log("unsagedFiles: " + (store1.get('unstagedFiles') === store2.get('unstagedFiles') ? "same" : "changed"));
-//   console.log("pendingCommit: " + (store1.get('pendingCommit') === store2.get('pendingCommit') ? "same" : "changed"));
-//   console.log("  summary: " + (store1.get('pendingCommit').get('summary') === store2.get('pendingCommit').get('summary') ? "same" : "changed"));
-//   console.log("  message: " + (store1.get('pendingCommit').get('message') === store2.get('pendingCommit').get('message') ? "same" : "changed"));
-//   console.log("  amendPreviousCommit: " + (store1.get('pendingCommit').get('amendPreviousCommit') === store2.get('pendingCommit').get('amendPreviousCommit') ? "same" : "changed"));
-//   console.log("  stagedFiles: " + (store1.get('pendingCommit').get('stagedFiles') === store2.get('pendingCommit').get('stagedFiles') ? "same" : "changed"));
-// }
+function compareStores(store1, store2)
+{
+  console.log("unsagedFiles: " + (store1.get('unstagedFiles') === store2.get('unstagedFiles') ? "same" : "* changed"));
+  console.log("pendingCommit: " + (store1.get('pendingCommit') === store2.get('pendingCommit') ? "same" : "* changed"));
+  console.log("  summary: " + (store1.get('pendingCommit').get('summary') === store2.get('pendingCommit').get('summary') ? "same" : "* changed"));
+  console.log("  message: " + (store1.get('pendingCommit').get('message') === store2.get('pendingCommit').get('message') ? "same" : "* changed"));
+  console.log("  amendPreviousCommit: " + (store1.get('pendingCommit').get('amendPreviousCommit') === store2.get('pendingCommit').get('amendPreviousCommit') ? "same" : "* changed"));
+  console.log("  stagedFiles: " + (store1.get('pendingCommit').get('stagedFiles') === store2.get('pendingCommit').get('stagedFiles') ? "same" : "* changed"));
+}

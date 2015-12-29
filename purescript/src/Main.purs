@@ -48,8 +48,6 @@ import Data.Array as Array
 --   -- |> show
 --   -- |> log
 
-
-
 type CommitMessageRecord =
   ( pendingCommit :: PendingCommit
   , unstagedFiles :: FileList
@@ -65,15 +63,6 @@ type PendingCommitRecord =
 type CommitMessage = IRecord.ImmutableRecord CommitMessageRecord
 type PendingCommit = IRecord.ImmutableRecord PendingCommitRecord
 type FileList = IList.ImmutableList String
-
-data Action
-  = GetCurrentState
-  | SetInitialUnstagedFiles (Array String)
-  | SetFileToStaged String
-  | UpdateSummary String
-  | UpdateMessage String
-  | UpdateAmendStatus Boolean
-
 
 createStore :: CommitMessage
 createStore = IRecord.makeRecord
@@ -103,8 +92,8 @@ setAmendCommit = updateFieldInPending "amendPreviousCommit"
 
 fileStaged :: String -> CommitMessage -> CommitMessage
 fileStaged file store =
-  updateFieldInPending "stagedFiles" updatedStagedFileList store |>
-  IRecord.setField "unstagedFiles" unstagedWithoutFile store
+  updateFieldInPending "stagedFiles" updatedStagedFileList store
+  |> IRecord.setField "unstagedFiles" unstagedWithoutFile
   where
     unstagedWithoutFile = IList.filterNot (\f -> f == file) existingUnstaged
     existingUnstaged = IRecord.getField "unstagedFiles" store :: FileList
@@ -120,13 +109,21 @@ updateFieldInPending field value store =
     commit = IRecord.getField "pendingCommit" store :: PendingCommit
     updatedCommit = IRecord.setField field value commit
 
-main = "test" |> log
+-- main = "test" |> log
 
 
 -- import Control.Monad.Eff.Ref
 -- import Signal
 -- import Signal.Channel
-
+--
+-- data Action
+--   = GetCurrentState
+--   | SetInitialUnstagedFiles (Array String)
+--   | SetFileToStaged String
+--   | UpdateSummary String
+--   | UpdateMessage String
+--   | UpdateAmendStatus Boolean
+--
 -- data Action
 --   = None
 --   | AddMessage
