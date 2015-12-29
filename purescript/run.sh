@@ -1,3 +1,5 @@
 #!/bin/bash
 
-pulp build --to output.js && node output.js
+export NODE_PATH=$NODE_PATH:./output
+pulp build && node index.js
+# pulp build --to output.js && node output.js
