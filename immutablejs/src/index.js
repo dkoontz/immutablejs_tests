@@ -21,10 +21,10 @@ console.log(commitMessageStore2);
 
 function compareStores(store1, store2)
 {
-  console.log("unsagedFiles: " + (store1.get('unstagedFiles') === store2.get('unstagedFiles') ? "same" : "changed"));
-  console.log("pendingCommit: " + (store1.get('pendingCommit') === store2.get('pendingCommit') ? "same" : "changed"));
-  console.log("  summary: " + (store1.get('pendingCommit').get('summary') === store2.get('pendingCommit').get('summary') ? "same" : "changed"));
-  console.log("  message: " + (store1.get('pendingCommit').get('message') === store2.get('pendingCommit').get('message') ? "same" : "changed"));
-  console.log("  amendPreviousCommit: " + (store1.get('pendingCommit').get('amendPreviousCommit') === store2.get('pendingCommit').get('amendPreviousCommit') ? "same" : "changed"));
-  console.log("  stagedFiles: " + (store1.get('pendingCommit').get('stagedFiles') === store2.get('pendingCommit').get('stagedFiles') ? "same" : "changed"));
+  console.log("unsagedFiles: " + (store1.get('unstagedFiles') === store2.get('unstagedFiles') ? "same" : "* changed"));
+  console.log("pendingCommit: " + (store1.get('pendingCommit') === store2.get('pendingCommit') ? "same" : "* changed"));
+  console.log("  summary: " + (store1.get('pendingCommit').get('summary') === store2.get('pendingCommit').get('summary') ? "same" : "* changed"));
+  console.log("  message: " + (store1.get('pendingCommit').get('message') === store2.get('pendingCommit').get('message') ? "same" : "* changed"));
+  console.log("  amendPreviousCommit: " + (store1.get('pendingCommit').get('amendPreviousCommit') === store2.get('pendingCommit').get('amendPreviousCommit') ? "same" : "* changed"));
+  console.log("  stagedFiles: " + (store1.get('pendingCommit').get('stagedFiles') === store2.get('pendingCommit').get('stagedFiles') ? "same" : "* changed"));
 }

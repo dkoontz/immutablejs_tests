@@ -7,4 +7,4 @@ exports.size = function (list) { return list.size; };
 
 exports._push = function (value, list) { return list.push(value); };
 exports._set = function (index, value, list) { return list.set(index, value); };
-exports._filterNot = function (filterFn, list) { console.log(List.isList(list)); return list.filterNot(filterFn); };
+exports._filterNot = function (filterFn, list) { return list.filterNot(filterFn); };
